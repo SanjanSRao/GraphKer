@@ -10,15 +10,20 @@ class CWEInserter:
 
     # Cypher Query to insert CWE reference Cypher Script
     def query_cwe_reference_script(self, file):
-        cwes_cypher_file = open(self.import_path + "CWEs_reference.cypher", "r")
+        cwes_cypher_file = open(r"CypherScripts\\CWEs_reference.cypher", "r")
         query = cwes_cypher_file.read()
-        query = query.replace('cweReferenceFilesToImport', f"'{file}'")
+        file_paths = os.path.normpath(os.path.join(self.import_path, file))
+        relative_path = 'C:/'
+        file_path = os.path.relpath(file_paths, relative_path)
+        file_path = file_path.replace(os.sep, '//')
+        file_path = '"%s"' % file_path
+        query = query.replace('cweReferenceFilesToImport', file_path)
 
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
-            print(f"CypherError: {e}")
+        except exceptions.CypherSyntaxError as e:
+            print(f"CypherSyntaxError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
         except Exception as e:
@@ -29,15 +34,20 @@ class CWEInserter:
 
     # Cypher Query to insert CWE weakness Cypher Script
     def query_cwe_weakness_script(self, file):
-        cwes_cypher_file = open(self.import_path + "CWEs_weakness.cypher", "r")
+        cwes_cypher_file = open(r"CypherScripts\\CWEs_weakness.cypher", "r")
         query = cwes_cypher_file.read()
-        query = query.replace('cweWeaknessFilesToImport', f"'{file}'")
+        file_paths = os.path.normpath(os.path.join(self.import_path, file))
+        relative_path = 'C:/'
+        file_path = os.path.relpath(file_paths, relative_path)
+        file_path = file_path.replace(os.sep, '//')
+        file_path = '"%s"' % file_path
+        query = query.replace('cweWeaknessFilesToImport', file_path)
 
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
-            print(f"CypherError: {e}")
+        except exceptions.CypherSyntaxError as e:
+            print(f"CypherSyntaxError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
         except Exception as e:
@@ -48,15 +58,20 @@ class CWEInserter:
 
     # Cypher Query to insert CWE category Cypher Script
     def query_cwe_category_script(self, file):
-        cwes_cypher_file = open(self.import_path + "CWEs_category.cypher", "r")
+        cwes_cypher_file = open(r"CypherScripts\\CWEs_category.cypher", "r")
         query = cwes_cypher_file.read()
-        query = query.replace('cweCategoryFilesToImport', f"'{file}'")
+        file_paths = os.path.normpath(os.path.join(self.import_path, file))
+        relative_path = 'C:/'
+        file_path = os.path.relpath(file_paths, relative_path)
+        file_path = file_path.replace(os.sep, '//')
+        file_path = '"%s"' % file_path
+        query = query.replace('cweCategoryFilesToImport', file_path)
 
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
-            print(f"CypherError: {e}")
+        except exceptions.CypherSyntaxError as e:
+            print(f"CypherSyntaxError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
         except Exception as e:
@@ -67,15 +82,20 @@ class CWEInserter:
 
     # Cypher Query to insert CWE view Cypher Script
     def query_cwe_view_script(self, file):
-        cwes_cypher_file = open(self.import_path + "CWEs_view.cypher", "r")
+        cwes_cypher_file = open(r"CypherScripts\\CWEs_view.cypher", "r")
         query = cwes_cypher_file.read()
-        query = query.replace('cweViewFilesToImport', f"'{file}'")
+        file_paths = os.path.normpath(os.path.join(self.import_path, file))
+        relative_path = 'C:/'
+        file_path = os.path.relpath(file_paths, relative_path)
+        file_path = file_path.replace(os.sep, '//')
+        file_path = '"%s"' % file_path
+        query = query.replace('cweViewFilesToImport', file_path)
 
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
-            print(f"CypherError: {e}")
+        except exceptions.CypherSyntaxError as e:
+            print(f"CypherSyntaxError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
         except Exception as e:

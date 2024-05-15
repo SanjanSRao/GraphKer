@@ -21,14 +21,19 @@ class CPEInserter:
     def query_cpe_script(self, file):
         start_time = time.time()
         # Insert file with CPE Query Script to Database
-        cpes_cypher_file = open(self.import_path + "CPEs.cypher", "r")
+        cpes_cypher_file = open(r"CypherScripts\\CPEs.cypher", "r")
         query = cpes_cypher_file.read()
-        query = query.replace('cpeFilesToImport', f"'{file}'")
+        file_paths = os.path.normpath(os.path.join(self.import_path, file))
+        relative_path = 'C:/'
+        file_path = os.path.relpath(file_paths, relative_path)
+        file_path = file_path.replace(os.sep, '//')
+        file_path = '"%s"' % file_path
+        query = query.replace('cpeFilesToImport', file_path)
         try:
             with self.driver.session() as session:
                 session.run(query)
-        except exceptions.CypherError as e:
-            print(f"CypherError: {e}")
+        except exceptions.CypherSyntaxError as e:
+            print(f"CypherSyntaxError: {e}")
         except exceptions.DriverError as e:
             print(f"DriverError: {e}")
         except Exception as e:
